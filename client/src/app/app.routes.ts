@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { TaskListComponent } from './components/task-list/task-list.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: TaskListComponent
-    }
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
