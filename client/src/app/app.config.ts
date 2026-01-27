@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
         messagingSenderId: '667734149867',
       })
     ),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()), provideAnimationsAsync(),
   ],
 };
