@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,15 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'recipe-app';
+  constructor(private authService: AuthService) {}
+
+  isPublisher(): boolean {
+    const token = localStorage.getItem('access_token');
+    if (!token) return false;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.role === 'publisher';
+  }
+  logout() {
+    this.authService.logout();
+  }
 }
