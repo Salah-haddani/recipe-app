@@ -1,10 +1,1 @@
-<nav class="navbar">
-  <span class="brand" routerLink="/home">RecipeApp</span>
-  <div class="nav-links">
-    <a *ngIf="isPublisher()" routerLink="/my-kitchen">My Kitchen</a>
-    <button mat-button (click)="logout()">Logout</button>
-  </div>
-</nav>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

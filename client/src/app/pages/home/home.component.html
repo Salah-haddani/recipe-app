@@ -1,12 +1,21 @@
-<div class="recipe-list">
-  <mat-card
-    *ngFor="let recipe of recipes"
-    class="recipe-card"
-    [routerLink]="['/recipes', recipe._id]"
-  >
-    <mat-card-content>
-      <h3>{{ recipe.title }}</h3>
-      <p>By: {{ recipe.owner?.email }}</p>
-    </mat-card-content>
-  </mat-card>
+<nav class="navbar">
+  <span class="brand" routerLink="/home">RecipeApp</span>
+  <div class="nav-links">
+    <a *ngIf="isPublisher()" routerLink="/my-kitchen">My Kitchen</a>
+    <button mat-button (click)="logout()">Logout</button>
+  </div>
+</nav>
+<div class="container">
+  <div class="recipe-list">
+    <mat-card
+      *ngFor="let recipe of recipes"
+      class="recipe-card"
+      [routerLink]="['/recipes', recipe._id]"
+    >
+      <mat-card-content>
+        <h3>{{ recipe.title }}</h3>
+        <p>By: {{ recipe.owner?.email }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
