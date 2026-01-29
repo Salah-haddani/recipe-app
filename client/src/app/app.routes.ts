@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RecipeDetailsComponent } from './pages/recipe-details/recipe-details.component';
 import { AuthGuard } from './auth.guard';
+import { MyKitchenComponent } from './pages/my-kitchen/my-kitchen.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-kitchen',
-    component: RecipeDetailsComponent,
+    component: MyKitchenComponent,
     canActivate: [AuthGuard],
     data: { role: 'publisher' },
   },
