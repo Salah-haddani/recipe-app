@@ -1,4 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+/* Apply Fredoka font */
+body {
+  margin: 0;
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+
+/* Force Angular Material components to use the Fredoka font */
+.mat-mdc-card,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-form-field,
+.mat-mdc-input-element,
+.mat-mdc-select,
+.mat-mdc-option,
+.mat-mdc-card-title,
+.mat-mdc-card-content,
+.mat-typography {
+  font-family: "Fredoka", sans-serif !important;
+}
+
+.mdc-floating-label,
+.mdc-text-field {
+  font-family: "Fredoka", sans-serif !important;
+}
+
+/* For the navigation links we created */
+.navbar,
+.nav-links a {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 500;
+}
