@@ -1,4 +1,35 @@
 <div class="kitchen-container">
+  <mat-card class="form-card">
+    <h3>{{ isEditing ? "Edit Recipe" : "Add New Recipe" }}</h3>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Ingredients (comma separated)</mat-label>
+        <input matInput formControlName="ingredients" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Instructions</mat-label>
+        <textarea matInput formControlName="instructions" rows="4"></textarea>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="recipeForm.invalid"
+      >
+        {{ isEditing ? "Update" : "Publish" }}
+      </button>
+      <button mat-button type="button" *ngIf="isEditing" (click)="resetForm()">
+        Cancel
+      </button>
+    </form>
+  </mat-card>
   <div class="my-recipes">
     <h3>My Recipes</h3>
     <mat-card *ngFor="let recipe of myRecipes" class="mini-card">
