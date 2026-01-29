@@ -83,6 +83,7 @@ export class MyKitchenComponent implements OnInit {
     });
   }
   deleteRecipe(id: string) {
+    console.log('Deleting recipe:', id);
     this.recipeService.deleteRecipe(id).subscribe(() => this.loadMyRecipes());
   }
   resetForm() {

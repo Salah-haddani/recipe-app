@@ -4,6 +4,7 @@ import {
   Delete,
   ForbiddenException,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -57,7 +58,13 @@ export class RecipesController {
 
   private async checkOwnership(recipeId: string, userId: string) {
     const recipe = await this.recipesService.findOne(recipeId);
-    if (recipe.owner.toString() !== userId.toString()) {
+    //Check if recipe exists
+    if (!recipe) {
+      throw new NotFoundException('Recipe not found');
+    }
+
+    //Check if owner exists then compare
+    if (!recipe.owner || recipe.owner.toString() !== userId.toString()) {
       throw new ForbiddenException('You do not own this recipe.');
     }
   }
