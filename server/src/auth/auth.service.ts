@@ -19,7 +19,12 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const user = await this.validateUser(email, password);
-    const payload = { sub: user._id, email: user.email, role: user.role };
+    const payload = {
+      sub: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    };
     return { access_token: this.jwtService.sign(payload) };
   }
 
@@ -37,7 +42,12 @@ export class AuthService {
       password,
       role,
     );
-    const payload = { sub: user._id, email: user.email, role: user.role };
+    const payload = {
+      sub: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    };
     return { access_token: this.jwtService.sign(payload) };
   }
 }
