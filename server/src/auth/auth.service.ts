@@ -24,13 +24,19 @@ export class AuthService {
   }
 
   async register(
+    username: string,
     email: string,
     password: string,
     role: 'user' | 'publisher' = 'user',
   ) {
     const existingUser = await this.usersService.findByEmail(email);
     if (existingUser) throw new UnauthorizedException('Email already exists');
-    const user = await this.usersService.create(email, password, role);
+    const user = await this.usersService.create(
+      username,
+      email,
+      password,
+      role,
+    );
     const payload = { sub: user._id, email: user.email, role: user.role };
     return { access_token: this.jwtService.sign(payload) };
   }

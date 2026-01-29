@@ -1,5 +1,5 @@
 <nav class="navbar">
-  <span class="brand" routerLink="/home">RecipeApp</span>
+  <a class="brand" routerLink="/home">RecipeApp</a>
   <div class="nav-links">
     <a *ngIf="isPublisher()" routerLink="/my-kitchen">My Kitchen</a>
     <button mat-button (click)="logout()">Logout</button>

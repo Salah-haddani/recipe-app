@@ -7,11 +7,12 @@ export class UsersService {
   constructor(@InjectModel('User') private userModel: Model<any>) {}
 
   async create(
+    username: string,
     email: string,
     password: string,
     role: 'user' | 'publisher' = 'user',
   ) {
-    const user = new this.userModel({ email, password, role });
+    const user = new this.userModel({ username, email, password, role });
     return user.save();
   }
 
