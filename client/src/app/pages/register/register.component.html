@@ -1,45 +1,80 @@
-<mat-card class="auth-card">
-  <mat-card-header>
-    <mat-card-title>Create Account</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          type="email"
-          placeholder="enter your email"
-        />
-      </mat-form-field>
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 class="auth-title">Join Our Community</h1>
+      <p class="auth-subtitle">Create an account to share your recipes</p>
+    </div>
+    <div class="auth-content">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            formControlName="email"
+            type="email"
+            placeholder="Enter your email"
+            [class.error]="
+              registerForm.get('email')?.touched &&
+              registerForm.get('email')?.invalid
+            "
+          />
+          <span
+            class="error-message"
+            *ngIf="
+              registerForm.get('email')?.touched &&
+              registerForm.get('email')?.invalid
+            "
+          >
+            Please enter a valid email
+          </span>
+        </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          formControlName="password"
-          type="password"
-          placeholder="must have at least 6 characters"
-        />
-      </mat-form-field>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            formControlName="password"
+            type="password"
+            placeholder="Must have at least 6 characters"
+            [class.error]="
+              registerForm.get('password')?.touched &&
+              registerForm.get('password')?.invalid
+            "
+          />
+          <span
+            class="error-message"
+            *ngIf="
+              registerForm.get('password')?.touched &&
+              registerForm.get('password')?.invalid
+            "
+          >
+            Password must be at least 6 characters
+          </span>
+        </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Register as a:</mat-label>
-        <mat-select formControlName="role">
-          <mat-option value="user">User - Viewer</mat-option>
-          <mat-option value="publisher">Publisher - Creator</mat-option>
-        </mat-select>
-      </mat-form-field>
+        <div class="form-group">
+          <label for="role">Register as a:</label>
+          <select id="role" formControlName="role">
+            <option value="" disabled>Select your role</option>
+            <option value="user">User - Viewer</option>
+            <option value="publisher">Publisher - Creator</option>
+          </select>
+        </div>
 
-      <button
-        mat-raised-button
-        color="accent"
-        type="submit"
-        [disabled]="registerForm.invalid"
-      >
-        Register
-      </button>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <button
+          class="custom-button"
+          type="submit"
+          [disabled]="registerForm.invalid"
+        >
+          Create Account
+        </button>
+      </form>
+    </div>
+    <div class="auth-actions">
+      <p class="auth-link-text">
+        Already have an account?
+        <a routerLink="/login" class="auth-link">Login here</a>
+      </p>
+    </div>
+  </div>
+</div>
