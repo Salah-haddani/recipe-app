@@ -15,4 +15,13 @@ export class RecipeService {
   getRecipeById(id: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${id}`);
   }
+  createRecipe(recipe: any): Observable<any[]> {
+    return this.http.post<any[]>(this.apiUrl, recipe);
+  }
+  updateRecipe(id: string, recipe: any): Observable<any[]> {
+    return this.http.put<any[]>(`${this.apiUrl}/${id}`, recipe);
+  }
+  deleteRecipe(id: string): Observable<any[]> {
+    return this.http.delete<any[]>(`${this.apiUrl}/${id}`);
+  }
 }
