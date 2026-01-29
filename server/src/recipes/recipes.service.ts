@@ -7,10 +7,12 @@ export class RecipesService {
   constructor(@InjectModel('Recipe') private recipeModel: Model<any>) {}
 
   async findAll() {
-    return this.recipeModel.find().populate('owner', 'email');
+    return this.recipeModel.find().populate('owner', 'email username');
   }
   async findOne(id: string) {
-    const recipe = await this.recipeModel.findById(id);
+    const recipe = await this.recipeModel
+      .findById(id)
+      .populate('owner', 'username');
     if (!recipe) throw new NotFoundException('recipe not found');
     return recipe;
   }
