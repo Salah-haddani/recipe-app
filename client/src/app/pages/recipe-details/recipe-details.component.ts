@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -13,7 +14,8 @@ export class RecipeDetailsComponent implements OnInit {
   recipe: any;
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -23,5 +25,14 @@ export class RecipeDetailsComponent implements OnInit {
         .getRecipeById(id)
         .subscribe((data) => (this.recipe = data));
     }
+  }
+  isPublisher(): boolean {
+    const token = localStorage.getItem('access_token');
+    if (!token) return false;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.role === 'publisher';
+  }
+  logout() {
+    this.authService.logout();
   }
 }

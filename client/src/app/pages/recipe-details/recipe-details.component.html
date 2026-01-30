@@ -1,10 +1,80 @@
-<div *ngIf="recipe" style="padding: 20px">
-  <h1>{{ recipe.title }}</h1>
-  <hr />
-  <h3>Ingredients</h3>
-  <ul>
-    <li *ngFor="let item of recipe.ingredients">{{ item }}</li>
-  </ul>
-  <h3>Instructions</h3>
-  <p>{{ recipe.instructions }}</p>
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="brand" routerLink="/home">
+      <span class="brand-text">RecipeApp</span>
+    </a>
+    <div class="nav-links">
+      <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="nav-link">
+        <span class="material-icons link-icon">restaurant</span>
+        My Kitchen
+      </a>
+      <button class="logout-button" (click)="logout()">
+        <span class="material-icons logout-icon">logout</span>
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div *ngIf="recipe" class="recipe-detail-container">
+  <!-- Recipe Header -->
+  <div class="recipe-header">
+    <div class="recipe-hero">
+      <div class="recipe-hero-image">
+        <span class="hero-emoji">🍽️</span>
+      </div>
+      <div class="recipe-hero-content">
+        <h1 class="recipe-title">{{ recipe.title }}</h1>
+        <div class="recipe-meta">
+          <div class="meta-item">
+            <span class="material-icons">person</span>
+            <span>{{ recipe.owner?.username || "Anonymous Chef" }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="material-icons">restaurant</span>
+            <span>{{ recipe.ingredients?.length || 0 }} ingredients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recipe Content -->
+  <div class="recipe-content">
+    <!-- Ingredients Section -->
+    <div class="content-card ingredients-card">
+      <div class="card-header">
+        <span class="card-icon">🥘</span>
+        <h2 class="card-title">Ingredients</h2>
+      </div>
+      <div class="card-body">
+        <ul class="ingredients-list">
+          <li *ngFor="let item of recipe.ingredients" class="ingredient-item">
+            <span class="ingredient-bullet">✓</span>
+            <span class="ingredient-text">{{ item }}</span>
+          </li>
+        </ul>
+        <div
+          *ngIf="!recipe.ingredients || recipe.ingredients.length === 0"
+          class="empty-message"
+        >
+          No ingredients listed yet.
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions Section -->
+    <div class="content-card instructions-card">
+      <div class="card-header">
+        <span class="card-icon">📝</span>
+        <h2 class="card-title">Instructions</h2>
+      </div>
+      <div class="card-body">
+        <div class="instructions-text">{{ recipe.instructions }}</div>
+        <div *ngIf="!recipe.instructions" class="empty-message">
+          No instructions provided yet.
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
