@@ -11,6 +11,8 @@ import {
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-kitchen',
@@ -21,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    RouterLink,
   ],
   templateUrl: './my-kitchen.component.html',
   styleUrl: './my-kitchen.component.css',
@@ -31,7 +34,11 @@ export class MyKitchenComponent implements OnInit {
   isEditing = false;
   currentRecipeId: string | null = null;
 
-  constructor(private recipeService: RecipeService, private fb: FormBuilder) {
+  constructor(
+    private recipeService: RecipeService,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
     this.recipeForm = this.fb.group({
       title: ['', Validators.required],
       ingredients: ['', Validators.required], // Will split by ','
@@ -90,5 +97,14 @@ export class MyKitchenComponent implements OnInit {
     this.isEditing = false;
     this.currentRecipeId = null;
     this.recipeForm.reset();
+  }
+  isPublisher(): boolean {
+    const token = localStorage.getItem('access_token');
+    if (!token) return false;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.role === 'publisher';
+  }
+  logout() {
+    this.authService.logout();
   }
 }

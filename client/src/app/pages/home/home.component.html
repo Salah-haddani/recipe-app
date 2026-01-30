@@ -1,21 +1,65 @@
 <nav class="navbar">
-  <a class="brand" routerLink="/home">RecipeApp</a>
-  <div class="nav-links">
-    <a *ngIf="isPublisher()" routerLink="/my-kitchen">My Kitchen</a>
-    <button mat-button (click)="logout()">Logout</button>
+  <div class="nav-container">
+    <a class="brand" routerLink="/home">
+      <span class="brand-text">RecipeApp</span>
+    </a>
+    <div class="nav-links">
+      <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="nav-link">
+        <span class="material-icons link-icon">restaurant</span>
+        My Kitchen
+      </a>
+      <button class="logout-button" (click)="logout()">
+        <span class="material-icons logout-icon">logout</span>
+        Logout
+      </button>
+    </div>
   </div>
 </nav>
+
+<div class="hero-section">
+  <h1 class="hero-title">Discover Delicious Recipes</h1>
+  <p class="hero-subtitle">
+    Explore a world of recipes from our community of creative cooks
+  </p>
+</div>
+
 <div class="container">
-  <div class="recipe-list">
-    <mat-card
+  <div class="recipes-grid">
+    <div
       *ngFor="let recipe of recipes"
       class="recipe-card"
       [routerLink]="['/recipes', recipe._id]"
     >
-      <mat-card-content>
-        <h3>{{ recipe.title }}</h3>
-        <p>By: {{ recipe.owner?.username }}</p>
-      </mat-card-content>
-    </mat-card>
+      <div class="recipe-image">
+        <div class="recipe-image-placeholder">
+          <span class="recipe-emoji">🍽️</span>
+        </div>
+        <div class="recipe-overlay">
+          <span class="view-recipe">View Recipe</span>
+        </div>
+      </div>
+      <div class="recipe-content">
+        <h3 class="recipe-title">{{ recipe.title }}</h3>
+        <div class="recipe-meta">
+          <div class="recipe-author">
+            <span class="author-icon">👤</span>
+            <span class="author-name">{{
+              recipe.owner?.username || "Anonymous Chef"
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="recipes.length === 0" class="empty-state">
+    <div class="empty-icon">🔍</div>
+    <h2 class="empty-title">No Recipes Yet</h2>
+    <p class="empty-description">
+      Be the first to share a delicious recipe with the community!
+    </p>
+    <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="empty-action">
+      Create Your First Recipe
+    </a>
   </div>
 </div>

@@ -1,3 +1,20 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="brand" routerLink="/home">
+      <span class="brand-text">RecipeApp</span>
+    </a>
+    <div class="nav-links">
+      <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="nav-link">
+        <span class="material-icons link-icon">restaurant</span>
+        My Kitchen
+      </a>
+      <button class="logout-button" (click)="logout()">
+        <span class="material-icons logout-icon">logout</span>
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
 <div class="kitchen-container">
   <mat-card class="form-card">
     <h3>{{ isEditing ? "Edit Recipe" : "Add New Recipe" }}</h3>
