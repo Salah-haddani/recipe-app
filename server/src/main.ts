@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
+const xss = require('xss-clean');
+import * as hpp from 'hpp';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +12,14 @@ async function bootstrap() {
     Credentials: true,
   });
   app.use(helmet());
+  app.use(mongoSanitize());
+  app.use(xss());
+  app.use(
+    hpp({
+      // Optional: Whitelist specific parameters that you want to allow multiples of
+      whitelist: ['cuisine', 'type'],
+    }),
+  );
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
