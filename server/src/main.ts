@@ -16,7 +16,6 @@ async function bootstrap() {
   app.use(xss());
   app.use(
     hpp({
-      // Optional: Whitelist specific parameters that you want to allow multiples of
       whitelist: ['cuisine', 'type'],
     }),
   );
