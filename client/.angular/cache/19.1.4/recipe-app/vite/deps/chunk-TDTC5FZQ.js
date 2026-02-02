@@ -27153,9 +27153,7 @@ if (typeof ngDevMode !== "undefined" && ngDevMode) {
 
 export {
   SIGNAL,
-  asapScheduler,
   queueScheduler,
-  animationFrameScheduler,
   isObservable,
   defer,
   forkJoin,
@@ -27723,4 +27721,4 @@ export {
    * found in the LICENSE file at https://angular.dev/license
    *)
 */
-//# sourceMappingURL=chunk-6RDDSYTQ.js.map
+//# sourceMappingURL=chunk-TDTC5FZQ.js.map
