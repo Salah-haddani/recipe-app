@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -19,8 +20,14 @@ export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Get()
-  async getAll() {
-    return this.recipesService.findAll();
+  async getAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 6,
+    @Query('sort') sort: string = 'desc',
+    @Query('ownerId') ownerId?: string,
+  ) {
+    const skip = (page - 1) * limit;
+    return this.recipesService.findAll({ skip, limit, sort, ownerId });
   }
 
   @Get(':id')
