@@ -33,7 +33,11 @@ export class MyKitchenComponent implements OnInit {
   recipeForm: FormGroup;
   isEditing = false;
   currentRecipeId: string | null = null;
+  pageSize = 3; // 3 recipes for each page
+  totalRecipes = 0;
 
+  currentPage = 1;
+  currentSort = 'desc';
   constructor(
     private recipeService: RecipeService,
     private fb: FormBuilder,
@@ -53,9 +57,12 @@ export class MyKitchenComponent implements OnInit {
   loadMyRecipes() {
     const token = localStorage.getItem('access_token');
     const user_id = JSON.parse(atob(token!.split('.')[1])).sub;
-    this.recipeService.getAllRecipes().subscribe((recipes) => {
-      this.myRecipes = recipes.filter((r) => r.owner._id === user_id); //filter recipes where owner is the user logged in
-    });
+    this.recipeService
+      .getAllRecipes(this.currentPage, this.pageSize, this.currentSort, user_id)
+      .subscribe((data) => {
+        this.myRecipes = data.recipes;
+        this.totalRecipes = data.total;
+      });
   }
   onSubmit() {
     if (this.recipeForm.invalid) return;
@@ -98,6 +105,18 @@ export class MyKitchenComponent implements OnInit {
     this.currentRecipeId = null;
     this.recipeForm.reset();
   }
+
+  changePage(newPage: number): void {
+    this.currentPage = newPage;
+    this.loadMyRecipes();
+  }
+
+  toggleSort(): void {
+    this.currentSort = this.currentSort === 'desc' ? 'asc' : 'desc';
+    this.currentPage = 1; // Reset to first page
+    this.loadMyRecipes();
+  }
+
   isPublisher(): boolean {
     const token = localStorage.getItem('access_token');
     if (!token) return false;

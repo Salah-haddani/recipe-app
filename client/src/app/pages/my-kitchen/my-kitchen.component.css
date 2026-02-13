@@ -471,3 +471,73 @@
   font-size: 16px;
   color: #666;
 }
+
+/* Aligning Sort and Count */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kitchen-sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 2px solid #ffe8dd;
+  color: #ff7444;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.kitchen-sort-btn:hover {
+  border-color: #ff7444;
+  background: #fff5f0;
+}
+
+/* Compact Pagination */
+.kitchen-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 16px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mini-pag-btn {
+  background: #fff5f0;
+  color: #ff7444;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mini-pag-btn:hover:not(:disabled) {
+  background: #ff7444;
+  color: white;
+}
+
+.mini-pag-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
