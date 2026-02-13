@@ -6,8 +6,29 @@ import { Model } from 'mongoose';
 export class RecipesService {
   constructor(@InjectModel('Recipe') private recipeModel: Model<any>) {}
 
-  async findAll() {
-    return this.recipeModel.find().populate('owner', 'email username');
+  async findAll(query: {
+    skip?: number;
+    limit?: number;
+    sort?: string;
+    ownerId?: string;
+  }) {
+    const { skip = 0, limit = 10, sort = 'desc', ownerId } = query;
+
+    const filter = ownerId ? { owner: ownerId } : {};
+
+    const sortOrder = sort === 'desc' ? -1 : 1;
+
+    const [recipes, total] = await Promise.all([
+      this.recipeModel
+        .find(filter)
+        .sort({ createdAt: sortOrder })
+        .skip(skip)
+        .limit(limit)
+        .populate('owner', 'email username'),
+      this.recipeModel.countDocuments(filter),
+    ]);
+
+    return { recipes, total };
   }
   async findOne(id: string) {
     const recipe = await this.recipeModel
