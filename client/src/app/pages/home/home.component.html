@@ -24,6 +24,13 @@
 </div>
 
 <div class="container">
+  <div class="controls-bar">
+    <button class="sort-btn" (click)="toggleSort()">
+      <span class="material-icons">sort</span>
+      Sort by:
+      <strong>{{ currentSort === "desc" ? "Newest" : "Oldest" }}</strong>
+    </button>
+  </div>
   <div class="recipes-grid">
     <div
       *ngFor="let recipe of recipes"
@@ -50,6 +57,27 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="pagination-bar" *ngIf="totalRecipes > pageSize">
+    <button
+      class="pag-btn"
+      [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)"
+    >
+      <span class="material-icons">chevron_left</span>
+      Prev
+    </button>
+
+    <span class="page-info">Page {{ currentPage }}</span>
+
+    <button
+      class="pag-btn"
+      [disabled]="currentPage * pageSize >= totalRecipes"
+      (click)="changePage(currentPage + 1)"
+    >
+      Next
+      <span class="material-icons">chevron_right</span>
+    </button>
   </div>
 
   <div *ngIf="recipes.length === 0" class="empty-state">
