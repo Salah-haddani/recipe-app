@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
         next: (data) => {
           this.recipes = data.recipes;
           this.totalRecipes = data.total;
+          console.log('output - recipes', this.recipes);
+          console.log('output - totalRecipes', this.totalRecipes);
         },
         error: (err) => console.error('could not load recipes', err),
       });

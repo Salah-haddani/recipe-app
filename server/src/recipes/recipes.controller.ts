@@ -21,13 +21,21 @@ export class RecipesController {
 
   @Get()
   async getAll(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 6,
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '6',
     @Query('sort') sort: string = 'desc',
     @Query('ownerId') ownerId?: string,
   ) {
-    const skip = (page - 1) * limit;
-    return this.recipesService.findAll({ skip, limit, sort, ownerId });
+    const pageNum = Number(page) || 1;
+    const limitNum = Number(limit) || 6;
+
+    const skip = (pageNum - 1) * limitNum;
+    return this.recipesService.findAll({
+      skip,
+      limit: limitNum,
+      sort,
+      ownerId,
+    });
   }
 
   @Get(':id')
