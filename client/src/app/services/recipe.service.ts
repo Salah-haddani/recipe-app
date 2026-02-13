@@ -9,8 +9,15 @@ export class RecipeService {
   private apiUrl = 'http://localhost:3000/recipes';
   constructor(private http: HttpClient) {}
 
-  getAllRecipes(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAllRecipes(
+    page: number,
+    limit: number,
+    sort: string,
+    ownerId?: string
+  ): Observable<any> {
+    let params = `?page=${page}&limit=${limit}&sort=${sort}`;
+    if (ownerId) params += `&ownerId=${ownerId}`;
+    return this.http.get<any>(`${this.apiUrl}${params}`);
   }
   getRecipeById(id: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${id}`);
