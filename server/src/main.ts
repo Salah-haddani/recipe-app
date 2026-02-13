@@ -12,13 +12,13 @@ async function bootstrap() {
     Credentials: true,
   });
   app.use(helmet());
-  app.use(mongoSanitize());
-  app.use(xss());
-  app.use(
+  //app.use(mongoSanitize());
+  //app.use(xss());
+  /*app.use(
     hpp({
       whitelist: ['cuisine', 'type'],
     }),
-  );
+  );*/
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
