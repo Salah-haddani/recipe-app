@@ -1,72 +1,107 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h1 class="auth-title">Welcome Back</h1>
-      <p class="auth-subtitle">Login to explore delicious recipes</p>
-    </div>
-    <div class="auth-content">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            id="email"
-            formControlName="email"
-            type="email"
-            placeholder="Enter your email"
-            [class.error]="
-              loginForm.get('email')?.touched &&
-              loginForm.get('email')?.hasError('required')
-            "
-          />
-          <span
-            class="error-message"
-            *ngIf="
-              loginForm.get('email')?.touched &&
-              loginForm.get('email')?.hasError('required')
-            "
-          >
-            Email is required
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            id="password"
-            formControlName="password"
-            type="password"
-            placeholder="Enter your password"
-            [class.error]="
-              loginForm.get('password')?.touched &&
-              loginForm.get('password')?.hasError('required')
-            "
-          />
-          <span
-            class="error-message"
-            *ngIf="
-              loginForm.get('password')?.touched &&
-              loginForm.get('password')?.hasError('required')
-            "
-          >
-            Password is required
-          </span>
-        </div>
-
-        <button
-          class="custom-button"
-          type="submit"
-          [disabled]="loginForm.invalid"
-        >
-          Login
-        </button>
-        <p-button icon="pi pi-user" label="Testing"></p-button>
-      </form>
-    </div>
-    <div class="auth-actions">
-      <p class="auth-link-text">
-        Don't have an account?
-        <a routerLink="/register" class="auth-link">Register here</a>
+<div
+  class="min-h-screen flex align-items-center justify-content-center p-3"
+  style="background: linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)"
+>
+  <p-card
+    class="w-full sm:w-30rem shadow-4 border-round-2xl"
+    [style]="{ background: 'white' }"
+  >
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h1 class="text-2xl font-bold text-orange-500 mb-2">Welcome Back</h1>
+      <p class="text-sm text-600 m-0 text-gray-600">
+        Login to explore delicious recipes
       </p>
     </div>
-  </div>
+
+    <!-- Form -->
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-column gap-3"
+    >
+      <!-- Email -->
+      <div class="flex flex-column gap-2">
+        <label for="email" class="font-semibold text-sm text-gray-600">
+          Email
+        </label>
+
+        <input
+          pInputText
+          id="email"
+          type="email"
+          formControlName="email"
+          class="text-gray-600"
+          placeholder="Enter your email"
+          [style]="{ background: 'white' }"
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+          }"
+        />
+
+        <small
+          class="p-error"
+          *ngIf="
+            loginForm.get('email')?.touched &&
+            loginForm.get('email')?.hasError('required')
+          "
+        >
+          Email is required
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-column gap-2">
+        <label for="password" class="font-semibold text-sm text-gray-600">
+          Password
+        </label>
+
+        <p-password
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          class="text-gray-600"
+          inputStyleClass="w-full"
+          [inputStyle]="{ 'background-color': 'white', color: '#4b5563' }"
+        ></p-password>
+
+        <small
+          class="p-error"
+          *ngIf="
+            loginForm.get('password')?.touched &&
+            loginForm.get('password')?.hasError('required')
+          "
+        >
+          Password is required
+        </small>
+      </div>
+
+      <!-- Button -->
+      <p-button
+        type="submit"
+        label="Login"
+        icon="pi pi-sign-in"
+        styleClass="w-full mt-2"
+        [disabled]="loginForm.invalid"
+        [style]="{ background: '#ff7444' }"
+      ></p-button>
+    </form>
+
+    <!-- Footer -->
+    <div class="text-center mt-4 pt-3 border-top-1 surface-border">
+      <p class="text-sm text-600 m-0 text-gray-600">
+        Don't have an account?
+        <a
+          routerLink="/register"
+          class="text-orange-500 font-semibold no-underline hover:underline"
+        >
+          Register here
+        </a>
+      </p>
+    </div>
+  </p-card>
 </div>
