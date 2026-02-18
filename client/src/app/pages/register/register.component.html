@@ -1,93 +1,169 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h1 class="auth-title">Join Our Community</h1>
-      <p class="auth-subtitle">Create an account to share your recipes</p>
-    </div>
-    <div class="auth-content">
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            id="username"
-            formControlName="username"
-            type="username"
-            placeholder="Enter your username"
-            [class.error]="
-              registerForm.get('username')?.touched &&
-              registerForm.get('username')?.invalid
-            "
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            id="email"
-            formControlName="email"
-            type="email"
-            placeholder="Enter your email"
-            [class.error]="
-              registerForm.get('email')?.touched &&
-              registerForm.get('email')?.invalid
-            "
-          />
-          <span
-            class="error-message"
-            *ngIf="
-              registerForm.get('email')?.touched &&
-              registerForm.get('email')?.invalid
-            "
-          >
-            Please enter a valid email
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            id="password"
-            formControlName="password"
-            type="password"
-            placeholder="Must have at least 6 characters"
-            [class.error]="
-              registerForm.get('password')?.touched &&
-              registerForm.get('password')?.invalid
-            "
-          />
-          <span
-            class="error-message"
-            *ngIf="
-              registerForm.get('password')?.touched &&
-              registerForm.get('password')?.invalid
-            "
-          >
-            Password must be at least 6 characters
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label for="role">Register as a:</label>
-          <select id="role" formControlName="role">
-            <option value="" disabled>Select your role</option>
-            <option value="user">User - Viewer</option>
-            <option value="publisher">Publisher - Creator</option>
-          </select>
-        </div>
-
-        <button
-          class="custom-button"
-          type="submit"
-          [disabled]="registerForm.invalid"
-        >
-          Create Account
-        </button>
-      </form>
-    </div>
-    <div class="auth-actions">
-      <p class="auth-link-text">
-        Already have an account?
-        <a routerLink="/login" class="auth-link">Login here</a>
+<div
+  class="min-h-screen flex align-items-center justify-content-center p-3"
+  style="background: linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)"
+>
+  <p-card
+    class="w-full sm:w-30rem shadow-4 border-round-2xl"
+    [style]="{ background: 'white' }"
+  >
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h1 class="text-2xl font-bold text-orange-500 mb-2">
+        Join Our Community
+      </h1>
+      <p class="text-sm text-600 m-0 text-gray-600">
+        Create an account to share your recipes
       </p>
     </div>
-  </div>
+
+    <!-- Form -->
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-column gap-3"
+    >
+      <!-- Username -->
+      <div class="flex flex-column gap-2">
+        <label for="username" class="font-semibold text-sm text-gray-600">
+          Username
+        </label>
+
+        <input
+          pInputText
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Enter your username"
+          class="text-gray-600"
+          [style]="{ background: 'white' }"
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              registerForm.get('username')?.touched &&
+              registerForm.get('username')?.invalid
+          }"
+        />
+
+        <small
+          class="p-error"
+          *ngIf="
+            registerForm.get('username')?.touched &&
+            registerForm.get('username')?.hasError('required')
+          "
+        >
+          Username is required
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-column gap-2">
+        <label for="email" class="font-semibold text-sm text-gray-600">
+          Email
+        </label>
+
+        <input
+          pInputText
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          class="text-gray-600"
+          [style]="{ background: 'white' }"
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              registerForm.get('email')?.touched &&
+              registerForm.get('email')?.invalid
+          }"
+        />
+
+        <small
+          class="p-error"
+          *ngIf="
+            registerForm.get('email')?.touched &&
+            registerForm.get('email')?.invalid
+          "
+        >
+          Please enter a valid email
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-column gap-2">
+        <label for="password" class="font-semibold text-sm text-gray-600">
+          Password
+        </label>
+
+        <p-password
+          id="password"
+          formControlName="password"
+          placeholder="Must be at least 6 characters"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          [inputStyle]="{ 'background-color': 'white', color: '#4b5563' }"
+        ></p-password>
+
+        <small
+          class="p-error"
+          *ngIf="
+            registerForm.get('password')?.touched &&
+            registerForm.get('password')?.invalid
+          "
+        >
+          Password must be at least 6 characters
+        </small>
+      </div>
+
+      <!-- Role -->
+      <div class="flex flex-column gap-2">
+        <label for="role" class="font-semibold text-sm text-gray-600">
+          Register as
+        </label>
+
+        <p-dropdown
+          id="role"
+          formControlName="role"
+          [options]="roles"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select your role"
+          class="w-full"
+          [style]="{ background: 'white' }"
+        ></p-dropdown>
+
+        <small
+          class="p-error"
+          *ngIf="
+            registerForm.get('role')?.touched &&
+            registerForm.get('role')?.invalid
+          "
+        >
+          Role is required
+        </small>
+      </div>
+
+      <!-- Button -->
+      <p-button
+        type="submit"
+        label="Create Account"
+        icon="pi pi-user-plus"
+        styleClass="w-full mt-2"
+        [disabled]="registerForm.invalid"
+        [style]="{ background: '#ff7444' }"
+      ></p-button>
+    </form>
+
+    <!-- Footer -->
+    <div class="text-center mt-4 pt-3 border-top-1 surface-border">
+      <p class="text-sm text-600 m-0 text-gray-600">
+        Already have an account?
+        <a
+          routerLink="/login"
+          class="text-orange-500 font-semibold no-underline hover:underline"
+        >
+          Login here
+        </a>
+      </p>
+    </div>
+  </p-card>
 </div>
