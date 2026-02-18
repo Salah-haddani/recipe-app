@@ -5,10 +5,17 @@ import { MatCardContent, MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MatCardModule, RouterLink, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    RouterLink,
+    MatButtonModule,
+    ButtonModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

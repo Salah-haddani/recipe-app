@@ -1,93 +1,138 @@
-<nav class="navbar">
-  <div class="nav-container">
-    <a class="brand" routerLink="/home">
-      <span class="brand-text">RecipeApp</span>
+<div class="sticky top-0 z-5 flex justify-content-center mt-3">
+  <div
+    class="flex align-items-center justify-content-between w-full md:w-30rem px-4 py-2 bg-white border-round-3xl shadow-3 mt-3"
+    style="border: 2px solid #ff7444"
+  >
+    <!-- Brand -->
+    <a
+      routerLink="/home"
+      class="text-xl font-semibold text-orange-500 no-underline"
+    >
+      RecipeApp
     </a>
-    <div class="nav-links">
-      <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="nav-link">
-        <span class="material-icons link-icon">restaurant</span>
-        My Kitchen
-      </a>
-      <button class="logout-button" (click)="logout()">
-        <span class="material-icons logout-icon">logout</span>
-        Logout
-      </button>
+
+    <!-- Actions -->
+    <div class="flex align-items-center gap-2">
+      <p-button
+        *ngIf="isPublisher()"
+        label="My Kitchen"
+        icon="pi pi-shop"
+        severity="secondary"
+        styleClass="border-round-3xl border-transparent text-gray-600"
+        [style]="{
+          background: 'linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)'
+        }"
+        routerLink="/my-kitchen"
+      ></p-button>
+
+      <p-button
+        label="Logout"
+        icon="pi pi-sign-out"
+        severity="danger"
+        styleClass="border-round-3xl"
+        (onClick)="logout()"
+        outlined
+      ></p-button>
     </div>
   </div>
-</nav>
+</div>
 
-<div class="hero-section">
-  <h1 class="hero-title">Discover Delicious Recipes</h1>
-  <p class="hero-subtitle">
+<div
+  class="text-center py-6 px-3 mt-5"
+  style="background: linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)"
+>
+  <h1 class="text-4xl font-bold text-orange-500 mb-3">
+    Discover Delicious Recipes
+  </h1>
+  <p class="text-lg text-gray-600 max-w-30rem mx-auto">
     Explore a world of recipes from our community of creative cooks
   </p>
 </div>
 
-<div class="container">
-  <div class="controls-bar">
-    <button class="sort-btn" (click)="toggleSort()">
-      <span class="material-icons">sort</span>
-      Sort by:
-      <strong>{{ currentSort === "desc" ? "Newest" : "Oldest" }}</strong>
-    </button>
-  </div>
-  <div class="recipes-grid">
-    <div
-      *ngFor="let recipe of recipes"
-      class="recipe-card"
-      [routerLink]="['/recipes', recipe._id]"
+<div class="max-w-6xl mx-auto px-3 py-6">
+  <div class="flex justify-content-end mb-4">
+    <p-button
+      icon="pi pi-sort"
+      label="Sort by:"
+      styleClass="border-round-3xl"
+      severity="secondary"
+      (onClick)="toggleSort()"
     >
-      <div class="recipe-image">
-        <div class="recipe-image-placeholder">
-          <span class="material-icons recipe-emoji">restaurant</span>
+    </p-button>
+
+    <span class="ml-2 font-semibold text-orange-500">
+      {{ currentSort === "desc" ? "Newest" : "Oldest" }}
+    </span>
+  </div>
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-4" *ngFor="let recipe of recipes">
+      <p-card
+        class="cursor-pointer h-full shadow-3 border-round-xl recipe-card"
+        [routerLink]="['/recipes', recipe._id]"
+      >
+        <!-- Image Placeholder -->
+        <div
+          class="flex align-items-center justify-content-center border-round-lg mb-3"
+          style="
+            height: 200px;
+            background: linear-gradient(135deg, #ffe8dd, #fff5f0);
+          "
+        >
+          <span class="material-icons text-orange-400 text-7xl"
+            >restaurant</span
+          >
         </div>
-        <div class="recipe-overlay">
-          <span class="view-recipe">View Recipe</span>
+
+        <!-- Content -->
+        <h3 class="text-lg font-semibold mb-2">
+          {{ recipe.title }}
+        </h3>
+
+        <div class="flex align-items-center gap-2 text-sm text-gray-600">
+          <i class="pi pi-user text-orange-400"></i>
+          <span class="font-semibold">
+            {{ recipe.owner?.username || "Anonymous Chef" }}
+          </span>
         </div>
-      </div>
-      <div class="recipe-content">
-        <h3 class="recipe-title">{{ recipe.title }}</h3>
-        <div class="recipe-meta">
-          <div class="recipe-author">
-            <span class="material-icons author-icon"> person </span>
-            <span class="author-name">{{
-              recipe.owner?.username || "Anonymous Chef"
-            }}</span>
-          </div>
-        </div>
-      </div>
+      </p-card>
     </div>
   </div>
-  <div class="pagination-bar" *ngIf="totalRecipes > pageSize">
-    <button
-      class="pag-btn"
+
+  <div
+    *ngIf="totalRecipes > pageSize"
+    class="flex justify-content-center align-items-center gap-3 mt-6"
+  >
+    <p-button
+      label="Prev"
+      icon="pi pi-chevron-left"
       [disabled]="currentPage === 1"
-      (click)="changePage(currentPage - 1)"
-    >
-      <span class="material-icons">chevron_left</span>
-      Prev
-    </button>
+      (onClick)="changePage(currentPage - 1)"
+      outlined
+    ></p-button>
 
-    <span class="page-info">Page {{ currentPage }}</span>
+    <span class="font-semibold"> Page {{ currentPage }} </span>
 
-    <button
-      class="pag-btn"
+    <p-button
+      label="Next"
+      icon="pi pi-chevron-right"
+      iconPos="right"
       [disabled]="currentPage * pageSize >= totalRecipes"
-      (click)="changePage(currentPage + 1)"
-    >
-      Next
-      <span class="material-icons">chevron_right</span>
-    </button>
+      (onClick)="changePage(currentPage + 1)"
+    ></p-button>
   </div>
 
-  <div *ngIf="recipes.length === 0" class="empty-state">
-    <div class="empty-icon">🔍</div>
-    <h2 class="empty-title">No Recipes Yet</h2>
-    <p class="empty-description">
+  <div *ngIf="recipes.length === 0" class="text-center py-8">
+    <div class="text-6xl mb-3">🔍</div>
+    <h2 class="text-3xl font-bold mb-2">No Recipes Yet</h2>
+    <p class="text-lg text-gray-600 mb-4">
       Be the first to share a delicious recipe with the community!
     </p>
-    <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="empty-action">
-      Create Your First Recipe
-    </a>
+
+    <p-button
+      *ngIf="isPublisher()"
+      label="Create Your First Recipe"
+      icon="pi pi-plus"
+      routerLink="/my-kitchen"
+    ></p-button>
   </div>
 </div>
