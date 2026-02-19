@@ -50,21 +50,23 @@
 </div>
 
 <div class="max-w-6xl mx-auto px-3 py-6">
-  <div class="flex justify-content-end mb-4">
+  <div class="flex justify-content-end mb-4 mr-6">
     <p-button
-      icon="pi pi-sort"
-      label="Sort by:"
       styleClass="border-round-3xl"
-      severity="secondary"
+      severity="danger"
       (onClick)="toggleSort()"
+      outlined
     >
+      <span class="ml-2 font-semibold text-orange-500">
+        <i class="pi pi-sort"></i>
+        Sort by:
+      </span>
+      <span class="ml-2 font-semibold text-orange-500">
+        {{ currentSort === "desc" ? "Newest" : "Oldest" }}
+      </span>
     </p-button>
-
-    <span class="ml-2 font-semibold text-orange-500">
-      {{ currentSort === "desc" ? "Newest" : "Oldest" }}
-    </span>
   </div>
-  <div class="grid">
+  <div class="grid ml-6 mr-6">
     <div class="col-12 md:col-6 lg:col-4" *ngFor="let recipe of recipes">
       <p-card
         class="cursor-pointer h-full shadow-3 border-round-xl recipe-card"
@@ -84,11 +86,11 @@
         </div>
 
         <!-- Content -->
-        <h3 class="text-lg font-semibold mb-2">
+        <h3 class="text-lg font-semibold mb-2 ml-2">
           {{ recipe.title }}
         </h3>
 
-        <div class="flex align-items-center gap-2 text-sm text-gray-600">
+        <div class="flex align-items-center gap-2 text-sm text-gray-600 ml-2">
           <i class="pi pi-user text-orange-400"></i>
           <span class="font-semibold">
             {{ recipe.owner?.username || "Anonymous Chef" }}
@@ -107,7 +109,7 @@
       icon="pi pi-chevron-left"
       [disabled]="currentPage === 1"
       (onClick)="changePage(currentPage - 1)"
-      outlined
+      [style]="{ background: '#ff7444', 'border-color': '#ff7444' }"
     ></p-button>
 
     <span class="font-semibold"> Page {{ currentPage }} </span>
@@ -118,6 +120,7 @@
       iconPos="right"
       [disabled]="currentPage * pageSize >= totalRecipes"
       (onClick)="changePage(currentPage + 1)"
+      [style]="{ background: '#ff7444', 'border-color': '#ff7444' }"
     ></p-button>
   </div>
 
