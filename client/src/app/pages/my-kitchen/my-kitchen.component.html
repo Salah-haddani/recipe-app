@@ -54,11 +54,11 @@
     <div class="col-12">
       <p-card
         [style]="{
-          background: 'linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)'
+          background: 'white'
         }"
       >
         <div class="flex justify-content-between align-items-center mb-3">
-          <h2 class="text-xl font-semibold m-0 text-black-alpha-90">
+          <h2 class="text-2xl font-semibold m-0 text-black-alpha-90">
             My Recipe Collection
           </h2>
 
@@ -146,10 +146,10 @@
     <div class="col-12 mt-5">
       <p-card
         [style]="{
-          background: 'linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)'
+          background: 'white'
         }"
       >
-        <h2 class="text-xl font-semibold mb-4 text-black-alpha-90">
+        <h2 class="text-2xl font-semibold mb-4 text-black-alpha-90">
           {{ isEditing ? "Edit Your Recipe" : "Create New Recipe" }}
         </h2>
 
@@ -167,6 +167,8 @@
               pInputText
               formControlName="title"
               placeholder="e.g. Chocolate Cake"
+              class="text-gray-600"
+              [style]="{ background: 'white' }"
             />
           </div>
 
@@ -179,6 +181,8 @@
               pInputText
               formControlName="ingredients"
               placeholder="e.g. 1 cup sugar, 3 eggs"
+              class="text-gray-600"
+              [style]="{ background: 'white' }"
             />
             <small class="text-gray-500">
               Separate each ingredient with a comma
@@ -195,6 +199,8 @@
               rows="5"
               formControlName="instructions"
               placeholder="Step by step instructions..."
+              class="text-gray-600"
+              [style]="{ background: 'white' }"
             ></textarea>
           </div>
 
