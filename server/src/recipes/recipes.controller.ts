@@ -79,7 +79,7 @@ export class RecipesController {
     }
 
     //Check if owner exists then compare
-    if (!recipe.owner || recipe.owner.toString() !== userId.toString()) {
+    if (!recipe.owner || recipe.owner._id.toString() !== userId.toString()) {
       throw new ForbiddenException('You do not own this recipe.');
     }
   }
