@@ -3,7 +3,7 @@ import {
 } from "./chunk-5G7WYC4N.js";
 import {
   BaseComponent
-} from "./chunk-FRGDPYLM.js";
+} from "./chunk-B43HBZDP.js";
 import {
   DOCUMENT,
   isPlatformBrowser
@@ -132,4 +132,4 @@ export {
   AutoFocus,
   AutoFocusModule
 };
-//# sourceMappingURL=chunk-HFQHCMQT.js.map
+//# sourceMappingURL=chunk-M4QLQAUE.js.map

@@ -13,6 +13,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-my-kitchen',
@@ -24,6 +28,10 @@ import { RouterLink } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     RouterLink,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    TextareaModule,
   ],
   templateUrl: './my-kitchen.component.html',
   styleUrl: './my-kitchen.component.css',

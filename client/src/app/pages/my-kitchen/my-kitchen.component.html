@@ -1,191 +1,224 @@
-<nav class="navbar">
-  <div class="nav-container">
-    <a class="brand" routerLink="/home">
-      <span class="brand-text">RecipeApp</span>
+<div class="sticky top-0 z-5 flex justify-content-center mt-3">
+  <div
+    class="flex align-items-center justify-content-between w-full md:w-30rem px-4 py-2 bg-white border-round-3xl shadow-3 mt-3"
+    style="border: 2px solid #ff7444"
+  >
+    <!-- Brand -->
+    <a
+      routerLink="/home"
+      class="text-xl font-semibold text-orange-500 no-underline"
+    >
+      RecipeApp
     </a>
-    <div class="nav-links">
-      <a *ngIf="isPublisher()" routerLink="/my-kitchen" class="nav-link">
-        <span class="material-icons link-icon">restaurant</span>
-        My Kitchen
-      </a>
-      <button class="logout-button" (click)="logout()">
-        <span class="material-icons logout-icon">logout</span>
-        Logout
-      </button>
+
+    <!-- Actions -->
+    <div class="flex align-items-center gap-2">
+      <p-button
+        *ngIf="isPublisher()"
+        label="My Kitchen"
+        icon="pi pi-shop"
+        severity="secondary"
+        styleClass="border-round-3xl border-transparent text-gray-600"
+        [style]="{
+          background: 'linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)'
+        }"
+        routerLink="/my-kitchen"
+      ></p-button>
+
+      <p-button
+        label="Logout"
+        icon="pi pi-sign-out"
+        severity="danger"
+        styleClass="border-round-3xl"
+        (onClick)="logout()"
+        outlined
+      ></p-button>
     </div>
   </div>
-</nav>
-<div class="kitchen-header">
-  <h1 class="kitchen-title">
-    <span class="material-icons link-icon-title">restaurant</span>
+</div>
+<div
+  class="text-center py-6 mt-5"
+  style="background: linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)"
+>
+  <h1
+    class="text-4xl font-bold text-orange-500 flex align-items-center justify-content-center gap-2"
+  >
+    <i class="pi pi-shop text-3xl"></i>
     My Kitchen
   </h1>
-  <p class="kitchen-subtitle">Create and manage your recipes</p>
+  <p class="text-gray-600 mt-2">Create and manage your recipes</p>
 </div>
 
-<div class="kitchen-container">
-  <!-- My Recipes Section -->
-  <div class="recipes-section">
-    <div class="section-header">
-      <h2 class="section-title">My Recipe Collection</h2>
-      <div class="header-actions">
-        <button class="kitchen-sort-btn" (click)="toggleSort()">
-          <span class="material-icons">sort</span>
-          {{ currentSort === "desc" ? "Newest" : "Oldest" }}
-        </button>
-        <span class="recipe-count"
-          >{{ totalRecipes }} recipe{{ totalRecipes !== 1 ? "s" : "" }}</span
+<div class="w-11 md:w-10 lg:w-8 mx-auto py-6">
+  <div class="grid">
+    <div class="col-12">
+      <p-card
+        [style]="{
+          background: 'linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)'
+        }"
+      >
+        <div class="flex justify-content-between align-items-center mb-3">
+          <h2 class="text-xl font-semibold m-0 text-black-alpha-90">
+            My Recipe Collection
+          </h2>
+
+          <div class="flex align-items-center gap-3">
+            <p-button
+              icon="pi pi-sort"
+              [label]="currentSort === 'desc' ? 'Newest' : 'Oldest'"
+              styleClass="p-button-text text-orange-500"
+              (onClick)="toggleSort()"
+            ></p-button>
+
+            <span
+              class="px-3 py-1 border-round-xl text-sm text-white"
+              style="background: #ff7444"
+            >
+              {{ totalRecipes }} recipe{{ totalRecipes !== 1 ? "s" : "" }}
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="myRecipes.length > 0" class="flex flex-column gap-3">
+          <div
+            *ngFor="let recipe of myRecipes"
+            class="flex justify-content-between align-items-center p-3 border-round-xl shadow-1"
+          >
+            <div class="flex align-items-center gap-3">
+              <i class="pi pi-book text-2xl text-orange-500"></i>
+              <span class="font-medium text-black-alpha-90">{{
+                recipe.title
+              }}</span>
+            </div>
+
+            <div class="flex gap-2">
+              <p-button
+                icon="pi pi-pencil"
+                label="Edit"
+                styleClass="p-button-text text-orange-500"
+                (onClick)="editRecipe(recipe)"
+              ></p-button>
+
+              <p-button
+                icon="pi pi-trash"
+                label="Delete"
+                severity="danger"
+                styleClass="p-button-text"
+                (onClick)="deleteRecipe(recipe._id)"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="totalRecipes > pageSize"
+          class="flex justify-content-center align-items-center gap-3 mt-6"
         >
-      </div>
-    </div>
+          <p-button
+            label="Prev"
+            icon="pi pi-chevron-left"
+            [disabled]="currentPage === 1"
+            (onClick)="changePage(currentPage - 1)"
+            [style]="{ background: '#ff7444', 'border-color': '#ff7444' }"
+          ></p-button>
 
-    <div class="recipes-grid" *ngIf="myRecipes.length > 0">
-      <div *ngFor="let recipe of myRecipes" class="recipe-item">
-        <div class="recipe-item-header">
-          <span class="material-icons recipe-icon">restaurant</span>
-          <h3 class="recipe-item-title">{{ recipe.title }}</h3>
+          <span class="font-semibold text-gray-600">
+            Page {{ currentPage }}
+          </span>
+
+          <p-button
+            label="Next"
+            icon="pi pi-chevron-right"
+            iconPos="right"
+            [disabled]="currentPage * pageSize >= totalRecipes"
+            (onClick)="changePage(currentPage + 1)"
+            [style]="{ background: '#ff7444', 'border-color': '#ff7444' }"
+          ></p-button>
         </div>
-        <div class="recipe-item-actions">
-          <button class="edit-button" (click)="editRecipe(recipe)">
-            <span class="material-icons">edit</span>
-            Edit
-          </button>
-          <button class="delete-button" (click)="deleteRecipe(recipe._id)">
-            <span class="material-icons">delete</span>
-            Delete
-          </button>
+
+        <div *ngIf="myRecipes.length === 0" class="text-center py-5">
+          <i class="pi pi-file text-4xl text-gray-400"></i>
+          <h3 class="mt-3">No recipes yet</h3>
+          <p class="text-gray-500">Start creating your first recipe!</p>
         </div>
-      </div>
+      </p-card>
     </div>
-
-    <div class="kitchen-pagination" *ngIf="totalRecipes > pageSize">
-      <button
-        class="mini-pag-btn"
-        [disabled]="currentPage === 1"
-        (click)="changePage(currentPage - 1)"
+    <div class="col-12 mt-5">
+      <p-card
+        [style]="{
+          background: 'linear-gradient(135deg, #fff5f0 0%, #ffe8dd 100%)'
+        }"
       >
-        <span class="material-icons">navigate_before</span>
-      </button>
-
-      <span class="page-indicator">Page {{ currentPage }}</span>
-
-      <button
-        class="mini-pag-btn"
-        [disabled]="currentPage * pageSize >= totalRecipes"
-        (click)="changePage(currentPage + 1)"
-      >
-        <span class="material-icons">navigate_next</span>
-      </button>
-    </div>
-
-    <div class="empty-recipes" *ngIf="myRecipes.length === 0">
-      <div class="empty-icon">📝</div>
-      <h3 class="empty-title">No recipes yet</h3>
-      <p class="empty-description">Start creating your first recipe!</p>
-    </div>
-  </div>
-
-  <!-- Recipe Form Section -->
-  <div class="form-section">
-    <div class="form-card">
-      <div class="form-header">
-        <h2 class="form-title">
+        <h2 class="text-xl font-semibold mb-4 text-black-alpha-90">
           {{ isEditing ? "Edit Your Recipe" : "Create New Recipe" }}
         </h2>
-      </div>
-      <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="title">Recipe Title</label>
-          <input
-            id="title"
-            formControlName="title"
-            type="text"
-            placeholder="e.g. Chocolate Cake"
-            [class.error]="
-              recipeForm.get('title')?.touched &&
-              recipeForm.get('title')?.invalid
-            "
-          />
-          <span
-            class="error-message"
-            *ngIf="
-              recipeForm.get('title')?.touched &&
-              recipeForm.get('title')?.invalid
-            "
-          >
-            Title is required
-          </span>
-        </div>
 
-        <div class="form-group">
-          <label for="ingredients">Ingredients</label>
-          <input
-            id="ingredients"
-            formControlName="ingredients"
-            type="text"
-            placeholder="e.g. 1 cup sugar, 3 eggs"
-            [class.error]="
-              recipeForm.get('ingredients')?.touched &&
-              recipeForm.get('ingredients')?.invalid
-            "
-          />
-          <span class="help-text">Separate each ingredient with a comma</span>
-          <span
-            class="error-message"
-            *ngIf="
-              recipeForm.get('ingredients')?.touched &&
-              recipeForm.get('ingredients')?.invalid
-            "
-          >
-            Ingredients are required
-          </span>
-        </div>
+        <form
+          [formGroup]="recipeForm"
+          (ngSubmit)="onSubmit()"
+          class="flex flex-column gap-4"
+        >
+          <!-- Title -->
+          <div class="flex flex-column gap-2">
+            <label class="font-semibold text-sm text-black-alpha-90"
+              >Recipe Title</label
+            >
+            <input
+              pInputText
+              formControlName="title"
+              placeholder="e.g. Chocolate Cake"
+            />
+          </div>
 
-        <div class="form-group">
-          <label for="instructions">Instructions</label>
-          <textarea
-            id="instructions"
-            formControlName="instructions"
-            rows="6"
-            placeholder="Step by step instructions to make your recipe..."
-            [class.error]="
-              recipeForm.get('instructions')?.touched &&
-              recipeForm.get('instructions')?.invalid
-            "
-          ></textarea>
-          <span
-            class="error-message"
-            *ngIf="
-              recipeForm.get('instructions')?.touched &&
-              recipeForm.get('instructions')?.invalid
-            "
-          >
-            Instructions are required
-          </span>
-        </div>
+          <!-- Ingredients -->
+          <div class="flex flex-column gap-2">
+            <label class="font-semibold text-sm text-black-alpha-90"
+              >Ingredients</label
+            >
+            <input
+              pInputText
+              formControlName="ingredients"
+              placeholder="e.g. 1 cup sugar, 3 eggs"
+            />
+            <small class="text-gray-500">
+              Separate each ingredient with a comma
+            </small>
+          </div>
 
-        <div class="form-actions">
-          <button
-            class="submit-button"
-            type="submit"
-            [disabled]="recipeForm.invalid"
-          >
-            <span class="material-icons">{{
-              isEditing ? "check_circle" : "add_circle"
-            }}</span>
-            {{ isEditing ? "Update Recipe" : "Publish Recipe" }}
-          </button>
-          <button
-            class="cancel-button"
-            type="button"
-            *ngIf="isEditing"
-            (click)="resetForm()"
-          >
-            <span class="material-icons">close</span>
-            Cancel
-          </button>
-        </div>
-      </form>
+          <!-- Instructions -->
+          <div class="flex flex-column gap-2">
+            <label class="font-semibold text-sm text-black-alpha-90"
+              >Instructions</label
+            >
+            <textarea
+              pTextarea
+              rows="5"
+              formControlName="instructions"
+              placeholder="Step by step instructions..."
+            ></textarea>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2">
+            <p-button
+              type="submit"
+              [label]="isEditing ? 'Update Recipe' : 'Publish Recipe'"
+              [icon]="isEditing ? 'pi pi-check' : 'pi pi-plus'"
+              [disabled]="recipeForm.invalid"
+              styleClass="w-full"
+              [style]="{ background: '#ff7444', border: 'none' }"
+            ></p-button>
+
+            <p-button
+              *ngIf="isEditing"
+              label="Cancel"
+              icon="pi pi-times"
+              styleClass="p-button-outlined"
+              (onClick)="resetForm()"
+            ></p-button>
+          </div>
+        </form>
+      </p-card>
     </div>
   </div>
 </div>
