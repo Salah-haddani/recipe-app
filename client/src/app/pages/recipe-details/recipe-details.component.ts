@@ -3,10 +3,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-recipe-details',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CardModule, ButtonModule],
   templateUrl: './recipe-details.component.html',
   styleUrl: './recipe-details.component.css',
 })
