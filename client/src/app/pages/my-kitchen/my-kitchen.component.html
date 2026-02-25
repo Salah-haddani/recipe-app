@@ -203,7 +203,19 @@
               [style]="{ background: 'white' }"
             ></textarea>
           </div>
-
+          <!-- is Available -->
+          <div class="flex align-items-center gap-2">
+            <label class="font-semibold text-sm text-black-alpha-90"
+              >Out Of Stock</label
+            >
+            <p-inputSwitch
+              class="mt-2"
+              formControlName="isAvailable"
+            ></p-inputSwitch>
+            <label class="font-semibold text-sm text-black-alpha-90"
+              >Available</label
+            >
+          </div>
           <!-- Actions -->
           <div class="flex gap-2">
             <p-button

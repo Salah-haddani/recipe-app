@@ -1,7 +1,7 @@
 import {
   __spreadProps,
   __spreadValues
-} from "./chunk-5K356HEJ.js";
+} from "./chunk-35ENWJA4.js";
 
 // node_modules/@primeuix/themes/dist/aura/accordion/index.mjs
 var o = {

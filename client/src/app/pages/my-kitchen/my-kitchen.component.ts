@@ -17,6 +17,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-my-kitchen',
@@ -32,6 +34,7 @@ import { TextareaModule } from 'primeng/textarea';
     CardModule,
     InputTextModule,
     TextareaModule,
+    InputSwitchModule,
   ],
   templateUrl: './my-kitchen.component.html',
   styleUrl: './my-kitchen.component.css',
@@ -48,6 +51,7 @@ export class MyKitchenComponent implements OnInit {
   currentSort = 'desc';
   constructor(
     private recipeService: RecipeService,
+    private socketService: SocketService,
     private fb: FormBuilder,
     private authService: AuthService
   ) {
@@ -55,6 +59,7 @@ export class MyKitchenComponent implements OnInit {
       title: ['', Validators.required],
       ingredients: ['', Validators.required], // Will split by ','
       instructions: ['', Validators.required],
+      isAvailable: [true],
     });
   }
 
@@ -76,6 +81,7 @@ export class MyKitchenComponent implements OnInit {
     if (this.recipeForm.invalid) return;
     const recipeData = {
       ...this.recipeForm.value,
+      isAvailable: !!this.recipeForm.value.isAvailable,
       ingredients: this.recipeForm.value.ingredients
         .split(',')
         .map((i: string) => i.trim()),
@@ -84,6 +90,10 @@ export class MyKitchenComponent implements OnInit {
       this.recipeService
         .updateRecipe(this.currentRecipeId, recipeData)
         .subscribe(() => {
+          this.socketService.emitStatusChange(
+            this.currentRecipeId!,
+            recipeData.isAvailable
+          );
           this.resetForm();
           this.loadMyRecipes();
         });
@@ -102,6 +112,7 @@ export class MyKitchenComponent implements OnInit {
       title: recipe.title,
       ingredients: recipe.ingredients.join(', '),
       instructions: recipe.instructions,
+      isAvailable: Boolean(recipe.isAvailable),
     });
   }
   deleteRecipe(id: string) {

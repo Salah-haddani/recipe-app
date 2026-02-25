@@ -4,6 +4,7 @@ import { RecipesController } from './recipes.controller';
 import { RecipeSchema } from './schemas/recipe.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from 'src/auth/auth.module';
+import { RecipesGateway } from './recipes.gateway';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { AuthModule } from 'src/auth/auth.module';
     AuthModule,
   ],
   controllers: [RecipesController],
-  providers: [RecipesService],
+  providers: [RecipesService, RecipesGateway],
 })
 export class RecipesModule {}

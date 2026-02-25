@@ -5,19 +5,29 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { SocketService } from '../../services/socket.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-recipe-details',
-  imports: [CommonModule, RouterLink, CardModule, ButtonModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    CardModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+  ],
   templateUrl: './recipe-details.component.html',
   styleUrl: './recipe-details.component.css',
 })
 export class RecipeDetailsComponent implements OnInit {
   recipe: any;
+  isUpdating = false;
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +37,16 @@ export class RecipeDetailsComponent implements OnInit {
         .getRecipeById(id)
         .subscribe((data) => (this.recipe = data));
     }
+    this.socketService.onStatusChange().subscribe((data) => {
+      if (data.recipeId === this.recipe._id) {
+        this.isUpdating = true;
+
+        setTimeout(() => {
+          this.recipe.isAvailable = data.isAvailable;
+          this.isUpdating = false;
+        }, 3000); // 3-second delay
+      }
+    });
   }
   isPublisher(): boolean {
     const token = localStorage.getItem('access_token');
