@@ -52,97 +52,21 @@
 <div class="w-11 md:w-10 lg:w-8 mx-auto py-6">
   <div class="grid">
     <div class="col-12">
-      <p-card
-        [style]="{
-          background: 'white'
-        }"
+      <app-recipe-list
+        [title]="'My Recipe Collection'"
+        [items]="myRecipes"
+        [totalCount]="totalRecipes"
+        [currentPage]="currentPage"
+        [pageSize]="pageSize"
+        [sortOrder]="currentSort"
+        (onEdit)="editRecipe($event)"
+        (onDelete)="deleteRecipe($event)"
+        (onSortToggle)="toggleSort()"
+        (onPageChange)="changePage($event)"
       >
-        <div class="flex justify-content-between align-items-center mb-3">
-          <h2 class="text-2xl font-semibold m-0 text-black-alpha-90">
-            My Recipe Collection
-          </h2>
-
-          <div class="flex align-items-center gap-3">
-            <p-button
-              icon="pi pi-sort"
-              [label]="currentSort === 'desc' ? 'Newest' : 'Oldest'"
-              styleClass="p-button-text text-orange-500"
-              (onClick)="toggleSort()"
-            ></p-button>
-
-            <span
-              class="px-3 py-1 border-round-xl text-sm text-white"
-              style="background: #ff7444"
-            >
-              {{ totalRecipes }} recipe{{ totalRecipes !== 1 ? "s" : "" }}
-            </span>
-          </div>
-        </div>
-
-        <div *ngIf="myRecipes.length > 0" class="flex flex-column gap-3">
-          <div
-            *ngFor="let recipe of myRecipes"
-            class="flex justify-content-between align-items-center p-3 border-round-xl shadow-1"
-          >
-            <div class="flex align-items-center gap-3">
-              <i class="pi pi-book text-2xl text-orange-500"></i>
-              <span class="font-medium text-black-alpha-90">{{
-                recipe.title
-              }}</span>
-            </div>
-
-            <div class="flex gap-2">
-              <p-button
-                icon="pi pi-pencil"
-                label="Edit"
-                styleClass="p-button-text text-orange-500"
-                (onClick)="editRecipe(recipe)"
-              ></p-button>
-
-              <p-button
-                icon="pi pi-trash"
-                label="Delete"
-                severity="danger"
-                styleClass="p-button-text"
-                (onClick)="deleteRecipe(recipe._id)"
-              ></p-button>
-            </div>
-          </div>
-        </div>
-
-        <div
-          *ngIf="totalRecipes > pageSize"
-          class="flex justify-content-center align-items-center gap-3 mt-6"
-        >
-          <p-button
-            label="Prev"
-            icon="pi pi-chevron-left"
-            [disabled]="currentPage === 1"
-            (onClick)="changePage(currentPage - 1)"
-            [style]="{ background: '#ff7444', 'border-color': '#ff7444' }"
-          ></p-button>
-
-          <span class="font-semibold text-gray-600">
-            Page {{ currentPage }}
-          </span>
-
-          <p-button
-            label="Next"
-            icon="pi pi-chevron-right"
-            iconPos="right"
-            [disabled]="currentPage * pageSize >= totalRecipes"
-            (onClick)="changePage(currentPage + 1)"
-            [style]="{ background: '#ff7444', 'border-color': '#ff7444' }"
-          ></p-button>
-        </div>
-
-        <div *ngIf="myRecipes.length === 0" class="text-center py-5">
-          <i class="pi pi-file text-4xl text-gray-400"></i>
-          <h3 class="mt-3">No recipes yet</h3>
-          <p class="text-gray-500">Start creating your first recipe!</p>
-        </div>
-      </p-card>
+      </app-recipe-list>
     </div>
+
     <div class="col-12 mt-5">
       <p-card
         [style]="{

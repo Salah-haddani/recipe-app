@@ -1,0 +1,16 @@
+::ng-deep .p-button.p-button-text.text-orange-500 {
+  color: #f97316;
+}
+
+::ng-deep .p-button.p-button-text.text-orange-500:hover {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
+}
+
+::ng-deep .p-button.p-button-text.text-orange-500:focus {
+  box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.25);
+}
+
+::ng-deep .p-button.p-button-text.text-orange-500:active {
+  background: rgba(249, 115, 22, 0.15);
+}

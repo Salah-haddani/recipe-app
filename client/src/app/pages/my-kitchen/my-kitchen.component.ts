@@ -19,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SocketService } from '../../services/socket.service';
+import { RecipeListComponent } from '../../components/recipe-list.component.ts/recipe-list.component';
 
 @Component({
   selector: 'app-my-kitchen',
@@ -35,6 +36,7 @@ import { SocketService } from '../../services/socket.service';
     InputTextModule,
     TextareaModule,
     InputSwitchModule,
+    RecipeListComponent,
   ],
   templateUrl: './my-kitchen.component.html',
   styleUrl: './my-kitchen.component.css',
